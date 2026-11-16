@@ -1,0 +1,2 @@
+# Model cache directory — HuggingFace model weights are stored here.
+# This directory is excluded from git via .gitignore.

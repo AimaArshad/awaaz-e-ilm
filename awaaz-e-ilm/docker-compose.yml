@@ -1,0 +1,68 @@
+version: "3.9"
+
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - backend_storage:/app/storage
+      - backend_models:/app/models_cache
+    env_file: .env
+    environment:
+      DATABASE_URL: sqlite+aiosqlite:////app/awaaz.db
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      redis:
+        condition: service_healthy
+    command: >
+      sh -c "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/app
+      - backend_storage:/app/storage
+      - backend_models:/app/models_cache
+    env_file: .env
+    environment:
+      DATABASE_URL: sqlite+aiosqlite:////app/awaaz.db
+      REDIS_URL: redis://redis:6379/0
+      USE_CELERY: "true"
+    depends_on:
+      redis:
+        condition: service_healthy
+    command: celery -A app.workers.celery_app worker --loglevel=info
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      VITE_API_BASE_URL: http://localhost:8000
+      VITE_WS_BASE_URL: ws://localhost:8000
+    command: npm run dev -- --host 0.0.0.0
+
+volumes:
+  backend_storage:
+  backend_models:

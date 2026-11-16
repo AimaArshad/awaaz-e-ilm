@@ -1,0 +1,46 @@
+# Web
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+python-multipart==0.0.9
+websockets==12.0
+httpx==0.27.0
+
+# DB
+sqlalchemy[asyncio]==2.0.30
+aiosqlite==0.20.0
+alembic==1.13.1
+asyncpg==0.29.0
+
+# Task queue
+celery==5.3.6
+redis==5.0.4
+
+# Config
+pydantic==2.7.1
+pydantic-settings==2.2.1
+python-dotenv==1.0.1
+
+# Utils
+aiofiles==23.2.1
+Pillow==10.3.0
+pydub==0.25.1
+
+# ── Document extraction (Prompt 2) ──────────────────────────────────────────
+PyMuPDF>=1.24.0
+python-docx>=1.1.0
+
+# ── OCR (Prompt 3) ──────────────────────────────────────────────────────────
+pytesseract>=0.3.10
+easyocr>=1.7.1
+opencv-python-headless>=4.9.0
+numpy>=1.26.0
+
+# ── Language detection & sentence splitting (Prompt 3) ──────────────────────
+lingua-language-detector>=2.0.2
+pysbd>=0.3.4
+
+# Linting / testing
+ruff==0.4.4
+black==24.4.2
+pytest==8.2.0
+pytest-asyncio==0.23.6

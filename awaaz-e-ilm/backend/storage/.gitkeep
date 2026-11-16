@@ -1,0 +1,2 @@
+# Storage directory — uploaded files are written here at runtime.
+# This directory is excluded from git via .gitignore.

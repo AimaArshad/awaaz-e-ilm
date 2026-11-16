@@ -1,0 +1,62 @@
+[
+  {
+    "id": "en_short",
+    "lang": "en",
+    "desc": "English short — pangram, 36 px",
+    "tess_no_pre_acc": 1.0,
+    "tess_pre_acc": 1.0,
+    "easy_no_pre_acc": 0.9773,
+    "easy_pre_acc": 0.9773,
+    "high_contrast": true
+  },
+  {
+    "id": "en_medium",
+    "lang": "en",
+    "desc": "English medium — quote, multi-line, 32 px",
+    "tess_no_pre_acc": 1.0,
+    "tess_pre_acc": 1.0,
+    "easy_no_pre_acc": 0.828,
+    "easy_pre_acc": 0.828,
+    "high_contrast": true
+  },
+  {
+    "id": "en_long",
+    "lang": "en",
+    "desc": "English long — paragraph, 28 px",
+    "tess_no_pre_acc": 1.0,
+    "tess_pre_acc": 1.0,
+    "easy_no_pre_acc": 0.9928,
+    "easy_pre_acc": 0.9928,
+    "high_contrast": true
+  },
+  {
+    "id": "ur_short",
+    "lang": "ur",
+    "desc": "Urdu short — single sentence, 40 px",
+    "tess_no_pre_acc": 1.0,
+    "tess_pre_acc": 1.0,
+    "easy_no_pre_acc": 0.1071,
+    "easy_pre_acc": 0.1071,
+    "high_contrast": true
+  },
+  {
+    "id": "ur_medium",
+    "lang": "ur",
+    "desc": "Urdu medium — two sentences, 36 px",
+    "tess_no_pre_acc": 0.9878,
+    "tess_pre_acc": 0.9878,
+    "easy_no_pre_acc": 0.3171,
+    "easy_pre_acc": 0.3171,
+    "high_contrast": true
+  },
+  {
+    "id": "ur_long",
+    "lang": "ur",
+    "desc": "Urdu long — paragraph, 36 px (wider line spacing for Tesseract)",
+    "tess_no_pre_acc": 0.9876,
+    "tess_pre_acc": 0.4224,
+    "easy_no_pre_acc": 0.0745,
+    "easy_pre_acc": 0.0683,
+    "high_contrast": true
+  }
+]

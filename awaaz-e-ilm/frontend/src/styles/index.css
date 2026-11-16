@@ -1,0 +1,67 @@
+/* Awaaz-e-Ilm global styles */
+/* Tailwind directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── CSS Variables for high-contrast theme ─────────────────────────────── */
+:root {
+  --hc-bg: #0a0a0a;
+  --hc-surface: #1a1a2e;
+  --hc-border: #2d2d4a;
+  --hc-text: #f0f0f0;
+  --hc-muted: #a0a0b0;
+  --hc-accent: #7c3aed;
+  --hc-accent-hover: #6d28d9;
+  --hc-success: #22c55e;
+  --hc-warning: #f59e0b;
+  --hc-danger: #ef4444;
+}
+
+/* ── Focus styles — wide visible ring for keyboard/AT users ─────────────── */
+:focus-visible {
+  outline: 3px solid var(--hc-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Screen-reader only utility (supplement Tailwind's sr-only) ─────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Smooth scrolling ───────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ── Urdu/RTL text support ──────────────────────────────────────────────── */
+[lang="ur"],
+[dir="rtl"] {
+  font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+  line-height: 2;  /* Nastaliq needs extra line height */
+  text-align: right;
+}
+
+/* ── Indeterminate progress bar animation ───────────────────────────────── */
+@keyframes slide {
+  0%   { margin-left: -33%; }
+  100% { margin-left: 100%; }
+}
+
+/* ── Scrollbar styling for dark theme ──────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track { background: #1a1a2e; }
+::-webkit-scrollbar-thumb { background: #4c4c7a; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #7c3aed; }
