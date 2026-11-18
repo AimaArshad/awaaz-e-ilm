@@ -52,18 +52,45 @@ async def _get_track(chapter_id: int, lang: str, db: AsyncSession) -> AudioTrack
 # Background task
 # ---------------------------------------------------------------------------
 async def _run_audio_generation(chapter_id: int, lang: str, force: bool):
-    from app.services.audio_generation import generate_chapter_audio
-    try:
-        await generate_chapter_audio(chapter_id, lang=lang, force=force)
-    except Exception:
-        logger.exception("Audio generation failed for chapter %s", chapter_id)
-        from app.db.session import AsyncSessionLocal
-        async with AsyncSessionLocal() as db:
-            track = await _get_track(chapter_id, lang, db)
-            if track and track.status == "processing":
-                track.status = "failed"
-                track.error = "Generation crashed; retry with force=true"
-                await db.commit()
+    from app.services.audio_jobs import run_generation
+    await run_generation(chapter_id, lang, force)
+    
+# async def _run_audio_generation(chapter_id: int, lang: str, force: bool):
+#     from app.services.audio_generation import generate_chapter_audio
+#     from app.db.session import AsyncSessionLocal
+
+#     error = None
+#     try:
+#         result = await generate_chapter_audio(chapter_id, lang=lang, force=force)
+#         if result.get("status") == "failed":
+#             error = result.get("error") or "Generation failed"
+#     except Exception:
+#         logger.exception("Audio generation failed for chapter %s", chapter_id)
+#         error = "Generation crashed; retry with force=true"
+
+#     if error:
+#         async with AsyncSessionLocal() as db:
+#             track = await _get_track(chapter_id, lang, db)
+#             if track and track.status == "processing":
+#                 track.status = "failed"
+#                 track.error = error
+#                 await db.commit()
+
+
+
+# async def _run_audio_generation(chapter_id: int, lang: str, force: bool):
+#     from app.services.audio_generation import generate_chapter_audio
+#     try:
+#         await generate_chapter_audio(chapter_id, lang=lang, force=force)
+#     except Exception:
+#         logger.exception("Audio generation failed for chapter %s", chapter_id)
+#         from app.db.session import AsyncSessionLocal
+#         async with AsyncSessionLocal() as db:
+#             track = await _get_track(chapter_id, lang, db)
+#             if track and track.status == "processing":
+#                 track.status = "failed"
+#                 track.error = "Generation crashed; retry with force=true"
+#                 await db.commit()
 
 # async def _run_audio_generation(chapter_id: int, lang: str, force: bool):
 #     """Background task wrapper."""
@@ -98,7 +125,11 @@ async def request_chapter_audio(
             "truncated": track.truncated,
             "error": None,
         }
-
+    
+    # Already being generated (e.g. started by a voice command): don't start a second one
+    if track and track.status == "processing":
+        return {"status": "processing", "duration_s": None, "truncated": False, "error": None}
+    
     # Mark as processing
     if track:
         track.status = "processing"

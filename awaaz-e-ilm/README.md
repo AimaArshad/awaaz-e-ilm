@@ -7,6 +7,19 @@
 cd frontend : python -m http.server 5173
 cd backend: uvicorn app.main:app --reload --port 8000
 
+## How to test Feature 1 in the browser
+
+.\.venv\Scripts\Activate.ps1
+
+1. Start the server from backend/, in one terminal:
+
+powershell
+uvicorn app.main:app --workers 1
+
+Wait for Application startup complete. The first start can take a while if Whisper has to download its model.
+
+2. Open http://127.0.0.1:8000/ in Chrome or Edge, not the VS Code preview. Microphone access works on localhost and 127.0.0.1.
+
 ### With Docker (recommended)
 
 ```bash

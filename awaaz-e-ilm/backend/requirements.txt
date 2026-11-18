@@ -44,3 +44,10 @@ ruff==0.4.4
 black==24.4.2
 pytest==8.2.0
 pytest-asyncio==0.23.6
+
+#--STT--
+faster-whisper
+rapidfuzz
+
+
+piper-tts          # pin the exact version you tested locally (pip freeze | grep piper)

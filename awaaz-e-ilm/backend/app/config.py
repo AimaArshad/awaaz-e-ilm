@@ -47,6 +47,10 @@ class Settings(BaseSettings):
     audio_max_chars: int = 8000
 
 
+    # ── STT ───────────────────────────────────────────────────────────────────
+    stt_language: str = "en"      # "" = auto-detect (set to "" when Urdu is added)
+    whisper_preload: bool = True
+
 @lru_cache()
 def get_settings() -> Settings:
     """Return cached Settings singleton."""
